@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Home from './components/Home';
+import Authenticate from './components/Authenticate';
+import PlaceList from './components/PlaceList';
+import AddPlace from './components/AddPlace';
+import EditPlace from './components/EditPlace';
+import PrivateRoute from './routes/PrivateRoute';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/authenticate" element={<Authenticate />} />
+        <PrivateRoute path="/:uid/places" element={<PlaceList />} />
+        <PrivateRoute path="/places/new" element={<AddPlace />} />
+        <PrivateRoute path="/places/:pid" element={<EditPlace />} />
+        <Route path="*" element={<Navigate to="/" />} /> {/* Redirect for unknown routes */}
+      </Routes>
+    </Router>
   );
 }
 
